@@ -2,9 +2,8 @@ package pl.weronikak98.ideas.category.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import pl.weronikak98.ideas.category.domain.model.Category;
 import pl.weronikak98.ideas.category.service.CategoryService;
 
 import java.util.UUID;
@@ -31,5 +30,12 @@ public class CategoryAdminViewController {
         model.addAttribute("category", categoryService.getCategory(id));
 
         return "admin/category/edit";
+    }
+
+    @PostMapping("{id}")
+    public String edit(@ModelAttribute ("category") Category category, @PathVariable UUID id) {
+        categoryService.updateCategory(id, category);
+
+        return "redirect:/admin/categories";
     }
 }
